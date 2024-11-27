@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <link rel="stylesheet" href="styling.css">
     <title>Luftkvalitet</title>
 </head>
+
 <body>
 
     <div id="app">
@@ -26,10 +28,39 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">.col-sm-3</div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <p>Filter</p>
+                    <label>
+                        dato fra:
+                        <input type="date">
+                    </label>
+                    <label>
+                        dato til:
+                        <input type="date">
+                    </label>
+                </div>
+            </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">.col-sm-3</div>
+            <div class="col-sm-12">
+                <div class="card">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Tidspunkt</th>
+                            <th>Lokale</th>
+                            <th>Luftkvalitet(CO2)</th>
+                            <th>Luftfughtighed</th>
+                        </thead>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
 
 
@@ -40,6 +71,7 @@
 
 
 
-    
+
 </body>
+
 </html>
