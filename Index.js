@@ -5,14 +5,14 @@ Vue.createApp({
         return {
             measurements: [],
             error: null,
-            showFilter: false
-            
+            showFilter: false,
+            newestMeasurement : null,
         }
     },
 
-    async created() {
-        this.getAllMeasurements()
-    },
+    //async created() {
+    //    this.getAllMeasurements()
+    //},
     methods: {
 
         showFilterMenu() {
@@ -39,7 +39,15 @@ Vue.createApp({
                 alert(ex.message)
             }
         },
+
         async getNewestMeasurement() {
+            try {
+                const response = await axios.get(baseUrl+"/last")
+                this.newestMeasurement = response.data
+            }
+            catch(ex) {
+                alert(ex.message)
+            }
             
         }
 

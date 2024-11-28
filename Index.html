@@ -65,18 +65,26 @@
                         <div class="card">
                             <div style="overflow-x:auto;">
                                 <table class="table table-striped">
+                                    <tr>
                                     <thead>
                                         <th>Tidspunkt</th>
                                         <th>Lokale</th>
                                         <th>Luftkvalitet(CO2)</th>
                                         <th>Luftfughtighed</th>
+                                        <th>Temperatur</th>
+                                        <th></th>
+                                    </tr>
                                     </thead>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <div v-if="measurements.length">
+                                    <tr v-for="measurement in measurements">
+                                        <td>{{measurement.time}}</td>
+                                        <td>{{measurement.location}}</td>
+                                        <td>{{measurement.cO2}}</td>
+                                        <td>{{measurement.humidity}}</td>
+                                        <td>{{measurement.temperature}}</td>
                                         <td></td>
                                     </tr>
+                                </div>
                                 </table>
                             </div>
                         </div>
