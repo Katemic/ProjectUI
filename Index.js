@@ -10,7 +10,9 @@ Vue.createApp({
         }
     },
 
-
+    async created() {
+        this.getAllMeasurements()
+    },
     methods: {
 
         showFilterMenu() {
@@ -21,18 +23,24 @@ Vue.createApp({
             }
         },
         getAllMeasurements() {
-            this.getAllMeasurements(baseUrl)
+            this.getMeasurements(baseUrl)
         },
+
         getByLocation(text) {
             const url = baseUrl + "?location=" + text
             this.getMeasurements(url)
-        },async getMeasurements(url) {
+        },
+
+        async getMeasurements(url) {
             try {
                 const response = await axios.get(url)
                 this.measurements = response.data
             } catch (ex) {
                 alert(ex.message)
             }
+        },
+        async getNewestMeasurement() {
+            
         }
 
     }
