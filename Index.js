@@ -41,6 +41,10 @@ Vue.createApp({
                 alert(ex.message)
             }
         },
+        formatTime(timeString) {
+            const date = new Date(timeString);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', hour12: false});
+          },
 
         async getNewestMeasurement() {
             try {

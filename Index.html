@@ -77,7 +77,7 @@
                                     </thead>
                                     
                                     <tr v-for="measurement in measurements">
-                                        <td>{{measurement.time}}</td>
+                                        <td>{{ formatTime(measurement.time) }}</td>
                                         <td>{{measurement.location}}</td>
                                         <td>{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
