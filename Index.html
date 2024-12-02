@@ -67,6 +67,7 @@
                                 <table v-if="measurements.length > 0" class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th>Dato</th>
                                             <th>Tidspunkt</th>
                                             <th>Lokale</th>
                                             <th>Luftkvalitet(CO2)</th>
@@ -77,7 +78,8 @@
                                     </thead>
                                     
                                     <tr v-for="measurement in measurements">
-                                        <td>{{ formatTime(measurement.time) }}</td>
+                                        <td>{{formatDate(measurement.time)}}</td>
+                                        <td>{{formatTime(measurement.time) }}</td>
                                         <td>{{measurement.location}}</td>
                                         <td>{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
