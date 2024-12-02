@@ -64,18 +64,18 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div style="overflow-x:auto;">
-                                <table class="table table-striped">
-                                    <tr>
+                                <table v-if="measurements.length > 0" class="table table-striped">
                                     <thead>
-                                        <th>Tidspunkt</th>
-                                        <th>Lokale</th>
-                                        <th>Luftkvalitet(CO2)</th>
-                                        <th>Luftfughtighed</th>
-                                        <th>Temperatur</th>
-                                        <th></th>
-                                    </tr>
+                                        <tr>
+                                            <th>Tidspunkt</th>
+                                            <th>Lokale</th>
+                                            <th>Luftkvalitet(CO2)</th>
+                                            <th>Luftfughtighed</th>
+                                            <th>Temperatur</th>
+                                            <th></th>
+                                        </tr>
                                     </thead>
-                                    <div v-if="measurements.length">
+                                    
                                     <tr v-for="measurement in measurements">
                                         <td>{{measurement.time}}</td>
                                         <td>{{measurement.location}}</td>
@@ -84,7 +84,7 @@
                                         <td>{{measurement.temperature}}</td>
                                         <td>pil</td>
                                     </tr>
-                                </div>
+                                
                                 </table>
                             </div>
                         </div>

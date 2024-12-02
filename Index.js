@@ -1,4 +1,5 @@
-const baseUrl = ""
+
+const baseUrl = "https://airqualityrest20241202114729.azurewebsites.net/api/AirQualities"
 
 Vue.createApp({
     data() {
@@ -10,9 +11,10 @@ Vue.createApp({
         }
     },
 
-    //async created() {
-    //    this.getAllMeasurements()
-    //},
+    async created() {
+        this.getAllMeasurements()
+        
+    },
     methods: {
 
         showFilterMenu() {
@@ -49,7 +51,10 @@ Vue.createApp({
                 alert(ex.message)
             }
             
-        }
-
+        },
     }
+
+
+
+    
 }).mount("#app")
