@@ -20,7 +20,12 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <p>Nyeste måling</p>
+                    <h1>Nyeste måling</h1>
+                    <div v-if="newestMeasurement">
+                    <h3>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
+                    <p>{{newestMeasurement.location}}</p>
+                    <p>CO2: {{newestMeasurement.cO2}}</p>
+                </div>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -29,7 +34,7 @@
 
                     <img src="Images/exampleGraf.png" width="300" height="300">
                   
-                    <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" />
+                    <!-- <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" /> -->
                     
                     <!-- <table>
                         <td><img src="Images/exampleGraf.png"></td>
@@ -105,7 +110,7 @@
     </div>
 
 
-    
+
     <script src="index.js"></script>
 
 
