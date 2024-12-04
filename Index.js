@@ -35,11 +35,30 @@ Vue.createApp({
         this.getAllMeasurements()
         //this.getNewestMeasurement()
         //this.getNewestMeasurement()
+        //await this.getAllMeasurement2()
 
+        //this.renderChart();
         console.log("Created has been called")
         
     },
     methods: {
+
+        // async getAllMeasurement2() {
+        //     try {
+        //         console.log('Fetching measurements...');
+        //         const response = await axios.get(baseUrl);
+        //         this.measurements = response.data.slice(0, 20).reverse(); // Get the 20 newest measurements
+        //         this.newestMeasurement = this.measurements[this.measurements.length - 1];
+        //         console.log('Measurements fetched:', this.measurements);
+        //     } catch (ex) {
+        //         console.error('Error fetching measurements:', ex.message);
+        //         alert(ex.message);
+        //     }
+        // },
+
+
+
+
 
         showFilterMenu() {
             if (this.showFilter == false || this.showFilter == "") {
@@ -112,16 +131,63 @@ Vue.createApp({
             const nextCO2 = this.measurements[index + 1].cO2;
             if (currentCO2 < nextCO2) {
                 return '↑';
+                //^
             } else if (currentCO2 > nextCO2) {
                 return '↓';
+                //⌄
             } else {
                 return '→';
+                //-
             }
+        },
+
+        renderChart() {
+            console.log('Rendering chart...');
+            const ctx = document.getElementById('co2Chart').getContext('2d');
+            console.log('Rendering chart...');
+            const labels = this.measurements.map(m => this.formatTime(m.time));
+            const data = this.measurements.map(m => m.cO2);
+
+            console.log('Labels:', labels);
+            console.log('Data:', data);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'CO2 Levels',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'CO2 Levels'
+                            }
+                        }
+                    }
+                }
+            });
         }
 
     }
 
 
-    
-    
+
+
 }).mount("#app") 

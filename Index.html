@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styling.css">
     <script src="https://unpkg.com/primevue/core/core.min.js"></script>
 
@@ -44,21 +45,11 @@
         <div class="col-sm-6">
             <div class="card">
 
-
+                <!-- <div class="card-body">
+                    <canvas id="co2Chart"></canvas>
+                </div> -->
             <img src="Images/exampleGraf.png" width="300" height="300">
                   
-                    <!-- <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" /> -->
-                    
-                    <!-- <table>
-                        <td><img src="Images/exampleGraf.png"></td>
-                        <td>
-                            <div class="btn-group-vertical" style="float: right;">
-                                <button type="button" class="btn btn-secondary">Graf</button>
-                                <button type="button" class="btn btn-secondary">Best/Worst</button>
-                                <button type="button" class="btn btn-secondary">Andet</button>
-                            </div>
-                        </td>
-                    </table> -->
             
                 </div>
             </div>
@@ -109,7 +100,7 @@
                                         <td v-bind="testThing">{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
                                         <td>{{measurement.temperature}}</td>
-                                        <td>{{ getArrowDirection(index) }}</td>
+                                        <td class="arrow">{{ getArrowDirection(index) }}</td>
                                         
                                     </tr>
                                 
