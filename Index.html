@@ -8,13 +8,15 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <link rel="stylesheet" href="styling.css">
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+
     <title>Luftkvalitet</title>
 </head>
 
 <body>
 
     <div id="app">
-        <p>Lokale: </p>
+        <p>Lokale: R-D3.07  </p>
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
@@ -24,16 +26,21 @@
             <div class="col-sm-6">
                 <div class="card">
             
-                    <table>
-                        <td>Graf</td>
+
+                    <img src="Images/exampleGraf.png" width="300" height="300">
+                  
+                    <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" />
+                    
+                    <!-- <table>
+                        <td><img src="Images/exampleGraf.png"></td>
                         <td>
-                            <div class="btn-group-vertical">
+                            <div class="btn-group-vertical" style="float: right;">
                                 <button type="button" class="btn btn-secondary">Graf</button>
                                 <button type="button" class="btn btn-secondary">Best/Worst</button>
                                 <button type="button" class="btn btn-secondary">Andet</button>
                             </div>
                         </td>
-                    </table>
+                    </table> -->
             
                 </div>
             </div>
@@ -97,6 +104,8 @@
 
     </div>
 
+
+    
     <script src="index.js"></script>
 
 

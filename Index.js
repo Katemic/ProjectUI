@@ -1,6 +1,7 @@
 
 const baseUrl = "https://airqualityrest20241202114729.azurewebsites.net/api/AirQualities"
 
+
 Vue.createApp({
     data() {
         return {
@@ -8,6 +9,12 @@ Vue.createApp({
             error: null,
             showFilter: false,
             newestMeasurement : null,
+            selectedOption: null,
+            options: [
+                {name: 'Graf'},
+                {name: 'Best and worst'}
+                
+            ]
         }
     },
 
@@ -65,6 +72,6 @@ Vue.createApp({
     }
 
 
-
     
-}).mount("#app")
+    
+}).mount("#app") 
