@@ -20,9 +20,9 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <h1>Nyeste måling</h1>
+                    <h3>Nyeste måling</h1>
                     <div v-if="newestMeasurement">
-                    <h3>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
+                    <h6>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
                     <p>{{newestMeasurement.location}}</p>
                     <p>CO2: {{newestMeasurement.cO2}}</p>
                 </div>
@@ -55,12 +55,12 @@
                     <div class="card">
                         <div v-on:click="showFilterMenu">
                             <p>Filter
-                            <span v-if="showFilter == true">▲</span>
-                            <span v-else>▼</span>
+                                <span v-if="showFilter == true">▲</span>
+                                <span v-else>▼</span>
                             </p>
-                    </div>
+                        </div>
                         <diV v-if="showFilter == true">
-                        <label>
+                            <label>
                                 dato fra:
                                 <input type="date">
                             </label>
@@ -69,12 +69,12 @@
                                 <input type="date">
                             </label>
                         </diV>
-                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
                             <div style="overflow-x:auto;">
                                 <table v-if="measurements.length > 0" class="table table-striped">
                                     <thead>
