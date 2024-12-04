@@ -15,7 +15,18 @@ Vue.createApp({
                 {name: 'Graf'},
                 {name: 'Best and worst'}
                 
-            ]
+            ],
+            testThing: null,
+            advices: [
+                "Øg ventilationen ved at åbne vinduer.",
+                "Brug luftrensere med HEPA-filtre.",
+                "Tilføj indendørs planter for at forbedre luftkvaliteten.",
+                "Reducer brugen af stearinlys og røgelse.",
+                "Undgå at ryge indendørs.",
+                "Brug udsugningsventilatorer i køkkener og badeværelser.",
+                "Vedligehold regelmæssigt HVAC-systemer.",
+                "Begræns brugen af kemikaliebaserede rengøringsprodukter."
+              ]
         }
     },
 
@@ -81,6 +92,33 @@ Vue.createApp({
             }
             
         },
+        getRowClass(value) {
+            if (value > 1000) {
+              return 'high-value';
+            } else if (value > 500) {
+              return 'medium-value';
+            } else {
+              return 'low-value';
+            }
+          },
+          getRandomAdvice() {
+            const randomIndex = Math.floor(Math.random() * this.advices.length);
+            return this.advices[randomIndex];
+        },
+
+        getArrowDirection(index) {
+            if (index === this.measurements.length - 1) return '→'; // Default arrow for the last row
+            const currentCO2 = this.measurements[index].cO2;
+            const nextCO2 = this.measurements[index + 1].cO2;
+            if (currentCO2 < nextCO2) {
+                return '↑';
+            } else if (currentCO2 > nextCO2) {
+                return '↓';
+            } else {
+                return '→';
+            }
+        }
+
     }
 
 

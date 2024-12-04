@@ -14,25 +14,38 @@
 </head>
 
 <body>
-
-    <div id="app">
-        <p>Lokale: R-D3.07 test </p>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <h3>Nyeste måling</h1>
-                    <div v-if="newestMeasurement">
-                    <h6>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
-                    <p>{{newestMeasurement.location}}</p>
-                    <p>CO2: {{newestMeasurement.cO2}}</p>
+<div id="app">
+    <p>Lokale: R-D3.07 test </p>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="card-title">Nyeste måling</h3>
+                    <small class="small-white">{{ formatDate(newestMeasurement.time) }}</small>
+                    </div>
+                    <div class="card-body" v-if="newestMeasurement">
+                    
+                        <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
+                        <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
+                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }}</p>
+                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{ getRandomAdvice()
+                            }}</p>
                 </div>
-                </div>
+                <!-- <h3>Nyeste måling</h1>
+                        <div v-if="newestMeasurement">
+                        <h6>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
+                        <p>{{newestMeasurement.location}}</p>
+                        <p>CO2: {{newestMeasurement.cO2}}</p>
+                        <p v-if="newestMeasurement.cO2 > 1000">Råd: {{ getRandomAdvice() }}</p> -->
             </div>
-            <div class="col-sm-6">
-                <div class="card">
-            
+        </div>
+    
+    
+        <div class="col-sm-6">
+            <div class="card">
 
-                    <img src="Images/exampleGraf.png" width="300" height="300">
+
+            <img src="Images/exampleGraf.png" width="300" height="300">
                   
                     <!-- <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" /> -->
                     
@@ -76,7 +89,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                             <div style="overflow-x:auto;">
-                                <table v-if="measurements.length > 0" class="table table-striped">
+                                <table v-if="measurements.length > 0" class="table">
                                     <thead>
                                         <tr>
                                             <th>Dato</th>
@@ -89,14 +102,15 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tr v-for="measurement in measurements">
+                                    <tr v-for="(measurement,index) in measurements" :class="getRowClass(measurement.cO2)">
                                         <td>{{formatDate(measurement.time)}}</td>
                                         <td>{{formatTime(measurement.time) }}</td>
                                         <td>{{measurement.location}}</td>
-                                        <td>{{measurement.cO2}}</td>
+                                        <td v-bind="testThing">{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
                                         <td>{{measurement.temperature}}</td>
-                                        <td>pil</td>
+                                        <td>{{ getArrowDirection(index) }}</td>
+                                        
                                     </tr>
                                 
                                 </table>

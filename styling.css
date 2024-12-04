@@ -10,3 +10,23 @@ body {
     padding: 20px;
     margin-top: 20px;
 }
+
+
+.low-value {
+    background-color: lightgreen;
+  }
+  
+  .medium-value {
+    background-color: lightyellow;
+  }
+  
+  .high-value {
+    background-color: lightcoral;
+  }
+
+
+
+  .small-white {
+    color: white;
+    font-size: 1rem;
+}
