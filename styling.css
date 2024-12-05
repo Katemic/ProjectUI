@@ -10,7 +10,7 @@ body {
     margin-top: 20px;
 }
 
-/* Add this to styling.css */
+/* Dropdown */
 .dropdown {
     position: relative;
     display: inline-block;
@@ -52,4 +52,14 @@ body {
 
 .dropdown:hover .dropbtn {
     background-color: #191970;
+}
+/* Chart */
+.card {
+    position: relative;
+    padding: 20px;
+}
+
+#myChart {
+    width: 100%;
+    height: auto;
 }

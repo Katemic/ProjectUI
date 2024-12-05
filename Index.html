@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <link rel="stylesheet" href="styling.css">
-    <script src="https://unpkg.com/primevue/core/core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Luftkvalitet</title>
 </head>
@@ -30,26 +31,19 @@
             </div>
             <div class="col-sm-6">
                 <div class="card">
-            
-
-                    <img src="Images/exampleGraf.png" width="300" height="300">
-                  
-                    <Dropdown v-model="selectedOption" :options="options" optionLabel="name" placeholder="Select an Option" class="w-full md:w-14rem" />
-                    
-                    <table>
-                        <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
+                    <h1>Seneste 20 målinger</h1>
+                    <canvas id="myChart" width="300" height="300"></canvas>
+                    <div class="dropdown" style="position: absolute; top: 10px; right: 10px;">
                         <button class="dropbtn">Dropdown</button>
-                           <div class="dropdown-content">
-                               <a href="#">Graf</a>
-                               <a href="#">Best/Worst</a>
-                               <a href="#">Andet</a>
-                          </div>
-                        </td>
-                    </table>
-            
+                        <div class="dropdown-content">
+                            <a href="#">Graf</a>
+                            <a href="#">Best/Worst</a>
+                            <a href="#">Andet</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </div>
+        </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
