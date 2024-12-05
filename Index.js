@@ -61,11 +61,12 @@ Vue.createApp({
 
 
         showFilterMenu() {
-            if (this.showFilter == false || this.showFilter == "") {
-                this.showFilter = true
-            } else {
-                this.showFilter = false
-            }
+            // if (this.showFilter == false || this.showFilter == "") {
+            //     this.showFilter = true
+            // } else {
+            //     this.showFilter = false
+            // }
+            this.showFilter = !this.showFilter;
         },
         getAllMeasurements() {
             this.getMeasurements(baseUrl)
@@ -111,6 +112,7 @@ Vue.createApp({
             }
             
         },
+
         getRowClass(value) {
             if (value > 1000) {
               return 'high-value';
@@ -119,8 +121,10 @@ Vue.createApp({
             } else {
               return 'low-value';
             }
-          },
-          getRandomAdvice() {
+        },
+
+
+        getRandomAdvice() {
             const randomIndex = Math.floor(Math.random() * this.advices.length);
             return this.advices[randomIndex];
         },
@@ -183,7 +187,34 @@ Vue.createApp({
                     }
                 }
             });
-        }
+        },
+
+        async filterMeasurements() {
+           let url = baseUrl;
+            const params = [];
+
+            if (this.fromDate) {
+                params.push(`dateTimeLower=${(this.fromDate)}`);
+            }
+            if (this.toDate) {
+                params.push(`dateTimeUpper=${(this.toDate)}`);
+            }
+
+            if (params.length > 0) {
+                url += '?' + params.join('&');
+            }
+
+            await this.getMeasurements(url);
+        },
+
+        resetFilter() {
+            this.fromDate = '';
+            this.toDate = '';
+            this.getAllMeasurements();
+        },
+
+
+
 
     }
 

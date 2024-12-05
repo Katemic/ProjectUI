@@ -29,8 +29,7 @@
                         <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
                         <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
                         <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }}</p>
-                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{ getRandomAdvice()
-                            }}</p>
+                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{getRandomAdvice()}}</p>
                 </div>
                 <!-- <h3>Nyeste måling</h1>
                         <div v-if="newestMeasurement">
@@ -59,19 +58,22 @@
                     <div class="card">
                         <div v-on:click="showFilterMenu">
                             <p>Filter
-                                <span v-if="showFilter == true">▲</span>
-                                <span v-else>▼</span>
+                                <span v-show="showFilter">▲</span>
+                                <span v-show="!showFilter">▼</span>
                             </p>
                         </div>
-                        <diV v-if="showFilter == true">
+                        <diV v-show="showFilter">
                             <label>
                                 dato fra:
-                                <input type="date">
+                                <input type="date" v-model="fromDate">
                             </label>
                             <label>
                                 dato til:
-                                <input type="date">
+                                <input type="date" v-model="toDate">
                             </label>
+                            <br>
+                            <button class="btn btn-secondary" v-on:click="filterMeasurements">Søg</button>
+                            <button class="btn btn-secondary" v-on:click="resetFilter">Nulstil</button>
                         </diV>
                     </div>
                 </div>
