@@ -9,6 +9,8 @@ body {
     background-color: white;
     padding: 20px;
     margin-top: 20px;
+    /* width: 100%;
+    height: auto; */
 }
 
 
@@ -34,4 +36,21 @@ body {
 .arrow {
   font-size: 20px; /* Adjust the font size as needed */
   border: none;
+}
+
+.chart-container {
+  position: relative;
+  height: 40vh;
+  width: 80vw;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 10px;
 }

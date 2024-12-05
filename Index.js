@@ -1,5 +1,7 @@
 const baseUrl = "https://airqualityrest20241202114729.azurewebsites.net/api/AirQualities"
 //const baseUrl = "http://localhost:5041/api/AirQualities"
+const baseUrl3Party = "https://emojihub.yurace.pro/api/random/group/"
+
 
 Vue.createApp({
     data() {
@@ -24,7 +26,15 @@ Vue.createApp({
                 "Brug udsugningsventilatorer i køkkener og badeværelser.",
                 "Vedligehold regelmæssigt HVAC-systemer.",
                 "Begræns brugen af kemikaliebaserede rengøringsprodukter."
-            ]
+              ],
+
+              emoji: null,
+
+              //pagination
+              filteredMeasurements: [],
+              currentPage: 1,
+              itemsPerPage: 24
+
         }
     },
 
@@ -57,6 +67,27 @@ Vue.createApp({
             } catch (ex) {
                 console.error('Error fetching measurements:', ex.message);
                 alert(ex.message);
+            }
+        },
+
+        async getEmoji(value){
+            try{
+                
+                let url = baseUrl3Party
+                if(value <= 1000){
+                    url += "face-positive"
+                }
+                else
+                {
+                    url += "face-negative"
+                }
+                console.log(url)
+                const response = await axios.get(url)
+                this.emoji = response.data.htmlCode
+                console.log(this.emoji)
+            }
+            catch(ex){
+                alert(ex.message)
             }
         },
 

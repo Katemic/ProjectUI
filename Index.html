@@ -28,9 +28,8 @@
                     
                         <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
                         <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
-                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }}</p>
-                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{ getRandomAdvice()
-                            }}</p>
+                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }} - <span v-html="emoji" style="font-size: 1.8em;"></span></p> 
+                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{getRandomAdvice()}}</p>
                 </div>
                 <!-- <h3>Nyeste måling</h1>
                         <div v-if="newestMeasurement">
@@ -105,6 +104,11 @@
                                     </tr>
                                 
                                 </table>
+                            </div>
+                            <div v-if="totalPages > 1" class="pagination">
+                                <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-secondary">Previous</button>
+                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                                <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-secondary">Next</button>
                             </div>
                         </div>
                     </div>
