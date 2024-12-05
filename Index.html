@@ -43,25 +43,30 @@
     
         <div class="col-sm-6">
             <div class="card">
+                <div class="card-body">
+        
+        
+                    <img src="Images/exampleGraf.png" width="300" height="300">
 
-                <!-- <div class="card-body">
-                    <canvas id="co2Chart"></canvas>
-                </div> -->
-            <img src="Images/exampleGraf.png" width="300" height="300">
-                  
-            
+                    <!-- <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
+                        <canvas id="co2Chart"></canvas>
+                    </div> -->
                 </div>
+                
+        
+        
             </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div v-on:click="showFilterMenu">
-                            <p>Filter
-                                <span v-show="showFilter">▲</span>
-                                <span v-show="!showFilter">▼</span>
-                            </p>
-                        </div>
+        </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div v-on:click="showFilterMenu">
+                        <p>Filter
+                            <span v-show="showFilter">▲</span>
+                            <span v-show="!showFilter">▼</span>
+                        </p>
+                    </div>
                         <diV v-show="showFilter">
                             <label>
                                 dato fra:
@@ -108,10 +113,10 @@
                                 
                                 </table>
                             </div>
-                            <div v-if="totalPages > 1" class="pagination" style="">
-                                <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                            <div v-if="totalPages > 1" class="pagination">
+                                <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-secondary">Previous</button>
                                 <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                                <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
+                                <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-secondary">Next</button>
                             </div>
                         </div>
                     </div>
