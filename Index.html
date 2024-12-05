@@ -29,7 +29,8 @@
                         <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
                         <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
                         <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }}</p>
-                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{getRandomAdvice()}}</p>
+                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{ getRandomAdvice()
+                            }}</p>
                 </div>
                 <!-- <h3>Nyeste måling</h1>
                         <div v-if="newestMeasurement">
@@ -44,10 +45,10 @@
         <div class="col-sm-6">
             <div class="card">
 
-                <!-- <div class="card-body">
+                <div class="card-body" style="height: 300px;"> <!-- Increased height from 400px to 500px -->
                     <canvas id="co2Chart"></canvas>
-                </div> -->
-            <img src="Images/exampleGraf.png" width="300" height="300">
+                </div>
+            <!-- <img src="Images/exampleGraf.png" width="300" height="300"> -->
                   
             
                 </div>
@@ -58,22 +59,19 @@
                     <div class="card">
                         <div v-on:click="showFilterMenu">
                             <p>Filter
-                                <span v-show="showFilter">▲</span>
-                                <span v-show="!showFilter">▼</span>
+                                <span v-if="showFilter == true">▲</span>
+                                <span v-else>▼</span>
                             </p>
                         </div>
-                        <diV v-show="showFilter">
+                        <diV v-if="showFilter == true">
                             <label>
                                 dato fra:
-                                <input type="date" v-model="fromDate">
+                                <input type="date">
                             </label>
                             <label>
                                 dato til:
-                                <input type="date" v-model="toDate">
+                                <input type="date">
                             </label>
-                            <br>
-                            <button class="btn btn-secondary" v-on:click="filterMeasurements">Søg</button>
-                            <button class="btn btn-secondary" v-on:click="resetFilter">Nulstil</button>
                         </diV>
                     </div>
                 </div>
@@ -82,7 +80,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                             <div style="overflow-x:auto;">
-                                <table v-if="paginatedMeasurements.length > 0" class="table">
+                                <table v-if="measurements.length > 0" class="table">
                                     <thead>
                                         <tr>
                                             <th>Dato</th>
@@ -95,7 +93,7 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tr v-for="(measurement,index) in paginatedMeasurements" :class="getRowClass(measurement.cO2)">
+                                    <tr v-for="(measurement,index) in measurements" :class="getRowClass(measurement.cO2)">
                                         <td>{{formatDate(measurement.time)}}</td>
                                         <td>{{formatTime(measurement.time) }}</td>
                                         <td>{{measurement.location}}</td>
@@ -107,11 +105,6 @@
                                     </tr>
                                 
                                 </table>
-                            </div>
-                            <div v-if="totalPages > 1" class="pagination" style="">
-                                <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                                <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
                             </div>
                         </div>
                     </div>
