@@ -82,7 +82,7 @@
                 <div class="col-sm-12">
                     <div class="card">
                             <div style="overflow-x:auto;">
-                                <table v-if="measurements.length > 0" class="table">
+                                <table v-if="paginatedMeasurements.length > 0" class="table">
                                     <thead>
                                         <tr>
                                             <th>Dato</th>
@@ -95,7 +95,7 @@
                                         </tr>
                                     </thead>
                                     
-                                    <tr v-for="(measurement,index) in measurements" :class="getRowClass(measurement.cO2)">
+                                    <tr v-for="(measurement,index) in paginatedMeasurements" :class="getRowClass(measurement.cO2)">
                                         <td>{{formatDate(measurement.time)}}</td>
                                         <td>{{formatTime(measurement.time) }}</td>
                                         <td>{{measurement.location}}</td>
@@ -107,6 +107,11 @@
                                     </tr>
                                 
                                 </table>
+                            </div>
+                            <div v-if="totalPages > 1" class="pagination" style="">
+                                <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
+                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                                <button @click="nextPage" :disabled="currentPage === totalPages">Next</button>
                             </div>
                         </div>
                     </div>

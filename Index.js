@@ -11,6 +11,8 @@ Vue.createApp({
             showFilter: false,
             newestMeasurement : null,
             selectedOption: null,
+            fromDate: '',
+            toDate: '',
             options: [
                 {name: 'Graf'},
                 {name: 'Best and worst'}
@@ -26,7 +28,14 @@ Vue.createApp({
                 "Brug udsugningsventilatorer i køkkener og badeværelser.",
                 "Vedligehold regelmæssigt HVAC-systemer.",
                 "Begræns brugen af kemikaliebaserede rengøringsprodukter."
-              ]
+              ],
+
+
+              //pagination
+              filteredMeasurements: [],
+              currentPage: 1,
+              itemsPerPage: 24
+
         }
     },
 
@@ -41,6 +50,18 @@ Vue.createApp({
         console.log("Created has been called")
         
     },
+
+    computed: {
+        totalPages() {
+            return Math.ceil(this.filteredMeasurements.length / this.itemsPerPage);
+        },
+        paginatedMeasurements() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            const end = start + this.itemsPerPage;
+            return this.filteredMeasurements.slice(start, end);
+        }
+    },
+
     methods: {
 
         // async getAllMeasurement2() {
@@ -81,6 +102,7 @@ Vue.createApp({
             try {
                 const response = await axios.get(url)
                 this.measurements = response.data
+                this.filteredMeasurements = this.measurements;
                 const response2 = await axios.get(baseUrl+"/last")
                 this.newestMeasurement = response2.data
 
@@ -205,15 +227,28 @@ Vue.createApp({
             }
 
             await this.getMeasurements(url);
+            //pagination
+            this.currentPage = 1;
         },
 
         resetFilter() {
             this.fromDate = '';
             this.toDate = '';
             this.getAllMeasurements();
+            //pagination
+            this.currentPage = 1;
         },
 
-
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        }
 
 
     }
