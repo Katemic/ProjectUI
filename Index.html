@@ -28,7 +28,7 @@
                     
                         <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
                         <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
-                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }}</p>
+                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }} - <span v-html="emoji" style="font-size: 1.8em;"></span></p> 
                         <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{getRandomAdvice()}}</p>
                 </div>
                 <!-- <h3>Nyeste måling</h1>

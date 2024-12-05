@@ -1,6 +1,7 @@
 
 const baseUrl = "https://airqualityrest20241202114729.azurewebsites.net/api/AirQualities"
 //const baseUrl = "http://localhost:5041/api/AirQualities"
+const baseUrl3Party = "https://emojihub.yurace.pro/api/random/group/"
 
 
 Vue.createApp({
@@ -30,6 +31,7 @@ Vue.createApp({
                 "Begræns brugen af kemikaliebaserede rengøringsprodukter."
               ],
 
+              emoji: null,
 
               //pagination
               filteredMeasurements: [],
@@ -105,8 +107,30 @@ Vue.createApp({
                 this.filteredMeasurements = this.measurements;
                 const response2 = await axios.get(baseUrl+"/last")
                 this.newestMeasurement = response2.data
+                this.getEmoji(this.newestMeasurement.cO2)
 
             } catch (ex) {
+                alert(ex.message)
+            }
+        },
+
+        async getEmoji(value){
+            try{
+                
+                let url = baseUrl3Party
+                if(value <= 1000){
+                    url += "face-positive"
+                }
+                else
+                {
+                    url += "face-negative"
+                }
+                console.log(url)
+                const response = await axios.get(url)
+                this.emoji = response.data.htmlCode
+                console.log(this.emoji)
+            }
+            catch(ex){
                 alert(ex.message)
             }
         },
