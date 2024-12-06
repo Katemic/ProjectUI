@@ -15,104 +15,120 @@
 </head>
 
 <body>
-<div id="app">
-    <p>Lokale: R-D3.07 test </p>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
-                <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
-                    <h3 class="card-title">Nyeste måling</h3>
-                    <small class="small-white">{{ formatDate(newestMeasurement.time) }}</small>
+    <div id="app">
+        <p>Lokale: R-D3.07 test </p>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                        <h3 class="card-title">Nyeste måling</h3>
+                        <small class="small-white">{{ formatDate(newestMeasurement.time) }}</small>
                     </div>
                     <div class="card-body" v-if="newestMeasurement">
-                    
+
                         <p class="card-text"><strong>Tid:</strong> {{ formatTime(newestMeasurement.time) }}</p>
                         <p class="card-text"><strong>Lokation:</strong> {{ newestMeasurement.location }}</p>
-                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }} - <span v-html="emoji" style="font-size: 1.8em;"></span></p> 
-                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong> {{getRandomAdvice()}}</p>
-                </div>
-                <!-- <h3>Nyeste måling</h1>
+                        <p class="card-text"><strong>CO2:</strong> {{ newestMeasurement.cO2 }} - <span v-html="emoji"
+                                style="font-size: 1.8em;"></span></p>
+                        <p class="card-text" v-if="newestMeasurement.cO2 > 1000"><strong>Råd:</strong>
+                            {{getRandomAdvice()}}</p>
+                    </div>
+                    <!-- <h3>Nyeste måling</h1>
                         <div v-if="newestMeasurement">
                         <h6>{{formatTime(newestMeasurement.time)}}--{{formatDate(newestMeasurement.time)}}</h3>
                         <p>{{newestMeasurement.location}}</p>
                         <p>CO2: {{newestMeasurement.cO2}}</p>
                         <p v-if="newestMeasurement.cO2 > 1000">Råd: {{ getRandomAdvice() }}</p> -->
+                </div>
+            </div>
+
+
+            <div class="col-sm-6">
+                <div class="card">
+
+                    <div class="card-body" style="height: 300px;"> <!-- Increased height-->
+                        <canvas id="co2Chart"></canvas>
+                    </div>
+
+
+                    <div class="card-body">
+                        <select class="form-control" v-model="selectedGraphSlice"
+                            @change="changeGraphSlice(selectedGraphSlice)">
+                            <option v-for="slice in graphSliceOptions" :key="slice" :value="slice">
+                                Last {{ slice }} Measurements
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <!-- <img src="Images/exampleGraf.png" width="300" height="300"> -->
+
+
+                </div>
             </div>
         </div>
-    
-    
-        <div class="col-sm-6">
-            <div class="card">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div v-on:click="showFilterMenu">
+                        <p>Filter
+                            <span v-if="showFilter == true">▲</span>
+                            <span v-else>▼</span>
+                        </p>
+                    </div>
+                    <diV v-if="showFilter == true">
+                        <label>
+                            dato fra:
+                            <input type="date">
+                        </label>
+                        <label>
+                            dato til:
+                            <input type="date">
+                        </label>
+                    </diV>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div style="overflow-x:auto;">
+                        <table v-if="measurements.length > 0" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Dato</th>
+                                    <th>Tidspunkt</th>
+                                    <th>Lokale</th>
+                                    <th>Luftkvalitet(CO2)</th>
+                                    <th>Luftfughtighed</th>
+                                    <th>Temperatur</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                <div class="card-body" style="height: 300px;"> <!-- Increased height from 400px to 500px -->
-                    <canvas id="co2Chart"></canvas>
-                </div>
-            <!-- <img src="Images/exampleGraf.png" width="300" height="300"> -->
-                  
-            
-                </div>
-            </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div v-on:click="showFilterMenu">
-                            <p>Filter
-                                <span v-if="showFilter == true">▲</span>
-                                <span v-else>▼</span>
-                            </p>
-                        </div>
-                        <diV v-if="showFilter == true">
-                            <label>
-                                dato fra:
-                                <input type="date">
-                            </label>
-                            <label>
-                                dato til:
-                                <input type="date">
-                            </label>
-                        </diV>
+                            <tr v-for="(measurement,index) in measurements" :class="getRowClass(measurement.cO2)">
+                                <td>{{formatDate(measurement.time)}}</td>
+                                <td>{{formatTime(measurement.time) }}</td>
+                                <td>{{measurement.location}}</td>
+                                <td v-bind="testThing">{{measurement.cO2}}</td>
+                                <td>{{measurement.humidity}}</td>
+                                <td>{{measurement.temperature}}</td>
+                                <td class="arrow">{{ getArrowDirection(index) }}</td>
+
+                            </tr>
+
+                        </table>
+                    </div>
+                    <div v-if="totalPages > 1" class="pagination">
+                        <button @click="prevPage" :disabled="currentPage === 1"
+                            class="btn btn-secondary">Previous</button>
+                        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                        <button @click="nextPage" :disabled="currentPage === totalPages"
+                            class="btn btn-secondary">Next</button>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                            <div style="overflow-x:auto;">
-                                <table v-if="measurements.length > 0" class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Dato</th>
-                                            <th>Tidspunkt</th>
-                                            <th>Lokale</th>
-                                            <th>Luftkvalitet(CO2)</th>
-                                            <th>Luftfughtighed</th>
-                                            <th>Temperatur</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    
-                                    <tr v-for="(measurement,index) in measurements" :class="getRowClass(measurement.cO2)">
-                                        <td>{{formatDate(measurement.time)}}</td>
-                                        <td>{{formatTime(measurement.time) }}</td>
-                                        <td>{{measurement.location}}</td>
-                                        <td v-bind="testThing">{{measurement.cO2}}</td>
-                                        <td>{{measurement.humidity}}</td>
-                                        <td>{{measurement.temperature}}</td>
-                                        <td class="arrow">{{ getArrowDirection(index) }}</td>
-                                        
-                                    </tr>
-                                
-                                </table>
-                            </div>
-                            <div v-if="totalPages > 1" class="pagination">
-                                <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-secondary">Previous</button>
-                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                                <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-secondary">Next</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        </div>
 
 
 

@@ -6,10 +6,17 @@ const baseUrl3Party = "https://emojihub.yurace.pro/api/random/group/"
 Vue.createApp({
     data() {
         return {
-            measurements: [],
+            allMeasurements: [], // Store all measurements
+            measurements: [], // Used for pagination and display
+            graphMeasurements: [], // Used specifically for the graph
             error: null,
             showFilter: false,
             newestMeasurement: null,
+
+            // New data properties for graph slicing
+            graphSliceOptions: [20, 30, 50, 100], // Available slice options
+            selectedGraphSlice: 20, // Default selected slice
+            
             fromDate: null,
             toDate: null,
             selectedOption: null,
@@ -61,9 +68,20 @@ Vue.createApp({
             try {
                 console.log('Fetching measurements...');
                 const response = await axios.get(baseUrl);
-                this.measurements = response.data.slice(0, 20).reverse(); // Get the 20 newest measurements
-                this.newestMeasurement = this.measurements[this.measurements.length - 1];
-                console.log('Measurements fetched:', this.measurements);
+                // Store ALL measurements
+                this.allMeasurements = response.data.reverse(); 
+                
+                // Slice ONLY the graph data
+                this.graphMeasurements = this.allMeasurements.slice(0, 20);
+                
+                // Set full measurements for table
+                this.measurements = this.allMeasurements;
+                
+                // Set newest measurement (from ALL measurements)
+                this.newestMeasurement = this.allMeasurements[0];
+                
+                console.log('All Measurements:', this.allMeasurements.length);
+                console.log('Graph Measurements:', this.graphMeasurements.length);
             } catch (ex) {
                 console.error('Error fetching measurements:', ex.message);
                 alert(ex.message);
@@ -133,11 +151,24 @@ Vue.createApp({
             }
         },
 
+        // New method to update graph measurements
+        updateGraphMeasurements() {
+            this.graphMeasurements = this.allMeasurements.slice(0, this.selectedGraphSlice);
+            this.renderChart(); // Re-render chart when slice changes
+        },
+
+        // Method to handle slice selection
+        changeGraphSlice(newSlice) {
+            this.selectedGraphSlice = newSlice;
+            this.updateGraphMeasurements();
+        },
+
         renderChart() {
             console.log('Rendering chart...');
             const ctx = document.getElementById('co2Chart').getContext('2d');
-            const labels = this.measurements.map(m => this.formatTime(m.time));
-            const data = this.measurements.map(m => m.cO2);
+            // Use graphMeasurements for chart
+            const labels = this.graphMeasurements.map(m => this.formatTime(m.time));
+            const data = this.graphMeasurements.map(m => m.cO2);
 
             // Calculate min and max for better scaling
             const minCO2 = Math.min(...data);
