@@ -124,7 +124,10 @@ Vue.createApp({
                 const response2 = await axios.get(baseUrl+"/last")
                 this.newestMeasurement = response2.data
                 this.getEmoji(this.newestMeasurement.cO2)
-                this.graphData = response.data.slice(0, 20).reverse();
+                if (this.measurements.length > 0) {
+                   this.graphData = response.data.slice(0, 20).reverse();
+                }
+                
                 console.log(this.graphData)
                 this.$nextTick(() => {
                     this.renderChart(); // Ensure renderChart is called after the DOM is updated

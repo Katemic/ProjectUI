@@ -16,7 +16,7 @@
 
 <body>
 <div id="app">
-    <p>Lokale: R-D3.07 test </p>
+    <h6>Lokale: R-D3.07</h6>
     <div class="row d-flex align-items-stretch mb-4">
         <div class="col-sm-6 mb-4 mb-sm-0">
             <div class="card h-100">
@@ -43,19 +43,29 @@
     
         <div class="col-sm-6">
             <div class="card card h-100">
-                <div class="card-body" style="height: 300px;"> <!-- Increased height-->
+                <div class="card-body" style="height: 350px;"> <!-- Increased height-->
+                    
+                    <select class="form-control" v-model="selectedGraphSlice" @change="changeGraphSlice(selectedGraphSlice)">
+                        <option v-for="slice in graphSliceOptions" :key="slice" :value="slice">
+                            Sidste {{ slice }} målinger
+                        </option>
+                    </select>
+                    
                     <canvas id="co2Chart"></canvas>
+                    
+                
+                
                 </div>
 
 
-                <div class="card-body">
+                <!-- <div class="card-body">
                     <select class="form-control" v-model="selectedGraphSlice"
                         @change="changeGraphSlice(selectedGraphSlice)">
                         <option v-for="slice in graphSliceOptions" :key="slice" :value="slice">
                             Sidste {{ slice }} målinger
                         </option>
                     </select>
-                </div>
+                </div> -->
                 
         
         
@@ -121,9 +131,9 @@
                                 </table>
                             </div>
                             <div v-if="totalPages > 1" class="pagination">
-                                <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-secondary">Previous</button>
-                                <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                                <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-secondary">Next</button>
+                                <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-secondary">Forrige</button>
+                                <span>Side {{ currentPage }} af {{ totalPages }}</span>
+                                <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-secondary">Næste</button>
                             </div>
                         </div>
                     </div>
