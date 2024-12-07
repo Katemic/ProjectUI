@@ -14,11 +14,6 @@ Vue.createApp({
             selectedOption: null,
             fromDate: '',
             toDate: '',
-            options: [
-                {name: 'Graf'},
-                {name: 'Best and worst'}
-                
-            ],
             testThing: null,
             advices: [
                 "Øg ventilationen ved at åbne vinduer.",
@@ -36,17 +31,27 @@ Vue.createApp({
               //pagination
               filteredMeasurements: [],
               currentPage: 1,
-              itemsPerPage: 24
+              itemsPerPage: 24,
+
+              //Graph
+              graphData: [],
+              selectedGraphSlice: 20,
+              graphSliceOptions: [20, 30, 50, 100],
+
 
         }
     },
 
     async created() {
         
-        this.getAllMeasurements()
+        await this.getAllMeasurements()
         //this.getNewestMeasurement()
         //this.getNewestMeasurement()
         //await this.getAllMeasurement2()
+
+        this.$nextTick(() => {
+            this.renderChart();
+        });
 
         //this.renderChart();
         console.log("Created has been called")
@@ -61,6 +66,17 @@ Vue.createApp({
             const start = (this.currentPage - 1) * this.itemsPerPage;
             const end = start + this.itemsPerPage;
             return this.filteredMeasurements.slice(start, end);
+        }
+    },
+
+    //NYT
+    beforeUnmount() {
+        // Remove resize listener to prevent memory leaks
+        window.removeEventListener('resize', this.renderChart);
+        
+        // Destroy chart instance if it exists
+        if (window.co2ChartInstance) {
+            window.co2ChartInstance.destroy();
         }
     },
 
@@ -108,6 +124,11 @@ Vue.createApp({
                 const response2 = await axios.get(baseUrl+"/last")
                 this.newestMeasurement = response2.data
                 this.getEmoji(this.newestMeasurement.cO2)
+                this.graphData = response.data.slice(0, 20).reverse();
+                console.log(this.graphData)
+                this.$nextTick(() => {
+                    this.renderChart(); // Ensure renderChart is called after the DOM is updated
+                });
 
             } catch (ex) {
                 alert(ex.message)
@@ -119,16 +140,17 @@ Vue.createApp({
                 
                 let url = baseUrl3Party
                 if(value <= 1000){
-                    url += "face-positive"
+                    this.emoji = "&#128516;"
                 }
                 else
                 {
                     url += "face-negative"
-                }
+                
                 console.log(url)
                 const response = await axios.get(url)
                 this.emoji = response.data.htmlCode
                 console.log(this.emoji)
+                }
             }
             catch(ex){
                 alert(ex.message)
@@ -191,17 +213,49 @@ Vue.createApp({
             }
         },
 
+
+        formatDateTime(timeString) {
+            const date = new Date(timeString);
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${day}.${month} ${hours}:${minutes}`;
+        },
+
+        // New method to update graph measurements
+        updateGraphMeasurements() {
+            console.log('Updating graph measurements...');
+            this.graphData = this.measurements.slice(0, this.selectedGraphSlice);
+            this.renderChart(); // Re-render chart when slice changes
+        },
+
+        // Method to handle slice selection
+        changeGraphSlice(newSlice) {
+            console.log('Changing graph slice to:', newSlice);
+            this.selectedGraphSlice = newSlice;
+            this.updateGraphMeasurements();
+        },
+
         renderChart() {
             console.log('Rendering chart...');
             const ctx = document.getElementById('co2Chart').getContext('2d');
-            console.log('Rendering chart...');
-            const labels = this.measurements.map(m => this.formatTime(m.time));
-            const data = this.measurements.map(m => m.cO2);
+            // Use graphMeasurements for chart
+            const labels = this.graphData.map(m => this.formatDateTime(m.time));
+            const data = this.graphData.map(m => m.cO2);
 
-            console.log('Labels:', labels);
-            console.log('Data:', data);
+            // Calculate min and max for better scaling
+            const minCO2 = Math.min(...data);
+            const maxCO2 = Math.max(...data);
 
-            new Chart(ctx, {
+            const maxYAxis = Math.ceil(maxCO2 / 500) * 500;
+
+            // Destroy existing chart if it exists to prevent multiple chart instances
+            if (window.co2ChartInstance) {
+                window.co2ChartInstance.destroy();
+            }
+
+            window.co2ChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: labels,
@@ -215,12 +269,25 @@ Vue.createApp({
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     scales: {
                         x: {
                             display: true,
                             title: {
                                 display: true,
                                 text: 'Time'
+                            },
+                            grid: {
+                                display: true,
+                                drawBorder: true
                             }
                         },
                         y: {
@@ -228,12 +295,32 @@ Vue.createApp({
                             title: {
                                 display: true,
                                 text: 'CO2 Levels'
+                            },
+                            beginAtZero: true,
+                            min: Math.max(0/* , minCO2 - 100 */),
+                            max: maxYAxis+500,
+                            ticks: {
+                                stepSize: 500,
+                                callback: function(value) {
+                                    return value.toFixed(0);
+                                }
+                            },
+                            grid: {
+                                display: true,
+                                drawBorder: true
                             }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
                         }
                     }
                 }
             });
         },
+
 
         async filterMeasurements() {
            let url = baseUrl;

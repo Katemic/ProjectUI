@@ -43,14 +43,18 @@
     
         <div class="col-sm-6">
             <div class="card">
-                <div class="card-body">
-        
-        
-                    <img src="Images/exampleGraf.png" width="300" height="300">
+                <div class="card-body" style="height: 300px;"> <!-- Increased height-->
+                    <canvas id="co2Chart"></canvas>
+                </div>
 
-                    <!-- <div class="chart-container" style="position: relative; height: 40vh; width: 80vw;">
-                        <canvas id="co2Chart"></canvas>
-                    </div> -->
+
+                <div class="card-body">
+                    <select class="form-control" v-model="selectedGraphSlice"
+                        @change="changeGraphSlice(selectedGraphSlice)">
+                        <option v-for="slice in graphSliceOptions" :key="slice" :value="slice">
+                            Last {{ slice }} Measurements
+                        </option>
+                    </select>
                 </div>
                 
         
