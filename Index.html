@@ -66,22 +66,24 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div v-on:click="showFilterMenu">
-                        <p>Filter
+                        <h5>Filter
                             <span v-show="showFilter">▲</span>
                             <span v-show="!showFilter">▼</span>
-                        </p>
+                        </h5>
                     </div>
                         <diV v-show="showFilter">
                             <label>
                                 dato fra:
                                 <input type="date" v-model="fromDate">
                             </label>
+                            &nbsp; 
                             <label>
-                                dato til:
+                                dato til: 
                                 <input type="date" v-model="toDate">
                             </label>
                             <br>
                             <button class="btn btn-secondary" v-on:click="filterMeasurements">Søg</button>
+                            &nbsp; 
                             <button class="btn btn-secondary" v-on:click="resetFilter">Nulstil</button>
                         </diV>
                     </div>
@@ -112,7 +114,7 @@
                                         <td v-bind="testThing">{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
                                         <td>{{measurement.temperature}}</td>
-                                        <td style="background-color: white;" class="arrow">{{ getArrowDirection(index) }}</td>
+                                        <td :class="getArrowClass(index)" style="background-color: white;" class="arrow" v-html="getArrowDirection(index)"></td>
                                         
                                     </tr>
                                 

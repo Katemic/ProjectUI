@@ -56,3 +56,15 @@ body {
 .pagination button {
   margin: 0 10px;
 }
+
+.arrow-up {
+  color: green;
+}
+
+.arrow-down {
+  color: red;
+}
+
+.arrow-right {
+  color: black; /* or any other color you prefer */
+}

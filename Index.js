@@ -197,20 +197,59 @@ Vue.createApp({
             return this.advices[randomIndex];
         },
 
-        getArrowDirection(index) {
-            if (index === this.measurements.length - 1) return '→'; // Default arrow for the last row
-            const currentCO2 = this.measurements[index].cO2;
-            const nextCO2 = this.measurements[index + 1].cO2;
-            if (currentCO2 < nextCO2) {
-                return '↑';
-                //^
-            } else if (currentCO2 > nextCO2) {
-                return '↓';
-                //⌄
+        getArrowDirection(paginatedIndex) {
+
+            const originalIndex = (this.currentPage - 1) * this.itemsPerPage + paginatedIndex;
+            if (originalIndex === this.measurements.length - 1) return '&#9188;'; // Default arrow for the last row
+            const currentCO2 = this.measurements[originalIndex].cO2;
+            const nextCO2 = this.measurements[originalIndex + 1].cO2;
+            const tolerance = 0.0001; // Define a small tolerance value
+
+
+
+            if (currentCO2 < nextCO2 - tolerance) {
+                return '&#9650;';
+            } else if (currentCO2 > nextCO2 + tolerance) {
+                return '&#9660;';
             } else {
-                return '→';
-                //-
+                return '&#9188;';
             }
+
+
+            // if (index === this.measurements.length - 1) return '→'; // Default arrow for the last row
+            // const currentCO2 = this.measurements[index].cO2;
+            // const nextCO2 = this.measurements[index + 1].cO2;
+            // if (currentCO2 < nextCO2) {
+            //     return '↑';
+            //     //^
+            // } else if (currentCO2 > nextCO2) {
+            //     return '↓';
+            //     //⌄
+            // } else {
+            //     return '→';
+            //     //-
+            // }
+        },
+
+        getArrowClass(paginatedIndex) {
+            const originalIndex = (this.currentPage - 1) * this.itemsPerPage + paginatedIndex;
+    if (originalIndex >= this.measurements.length - 1) return 'arrow-right'; // Default arrow for the last row or out of bounds
+    const currentCO2 = this.measurements[originalIndex].cO2;
+    const nextMeasurement = this.measurements[originalIndex + 1];
+    const nextCO2 = nextMeasurement ? nextMeasurement.cO2 : null;
+    const tolerance = 0.0001; // Define a small tolerance value
+
+    if (nextCO2 === null) {
+        return 'arrow-right'; // Default arrow for the last row or if nextCO2 is undefined
+    }
+
+    if (currentCO2 < nextCO2 - tolerance) {
+        return 'arrow-up';
+    } else if (currentCO2 > nextCO2 + tolerance) {
+        return 'arrow-down';
+    } else {
+        return 'arrow-right';
+    }
         },
 
 
