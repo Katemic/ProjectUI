@@ -36,6 +36,8 @@ body {
 .arrow {
   font-size: 20px; /* Adjust the font size as needed */
   border: none;
+  text-align: center; /* Center horizontally */
+  vertical-align: middle; /* Center vertically */
 }
 
 .chart-container {

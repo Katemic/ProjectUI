@@ -283,7 +283,7 @@ Vue.createApp({
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Time'
+                                text: 'Dato og tid'
                             },
                             grid: {
                                 display: true,

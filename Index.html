@@ -17,9 +17,9 @@
 <body>
 <div id="app">
     <p>Lokale: R-D3.07 test </p>
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card">
+    <div class="row d-flex align-items-stretch mb-4">
+        <div class="col-sm-6 mb-4 mb-sm-0">
+            <div class="card h-100">
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <h3 class="card-title">Nyeste måling</h3>
                     <small class="small-white">{{ formatDate(newestMeasurement.time) }}</small>
@@ -42,7 +42,7 @@
     
     
         <div class="col-sm-6">
-            <div class="card">
+            <div class="card card h-100">
                 <div class="card-body" style="height: 300px;"> <!-- Increased height-->
                     <canvas id="co2Chart"></canvas>
                 </div>
@@ -52,7 +52,7 @@
                     <select class="form-control" v-model="selectedGraphSlice"
                         @change="changeGraphSlice(selectedGraphSlice)">
                         <option v-for="slice in graphSliceOptions" :key="slice" :value="slice">
-                            Last {{ slice }} Measurements
+                            Sidste {{ slice }} målinger
                         </option>
                     </select>
                 </div>
@@ -94,13 +94,14 @@
                                 <table v-if="paginatedMeasurements.length > 0" class="table">
                                     <thead>
                                         <tr>
-                                            <th>Dato</th>
-                                            <th>Tidspunkt</th>
-                                            <th>Lokale</th>
-                                            <th>Luftkvalitet(CO2)</th>
-                                            <th>Luftfughtighed</th>
-                                            <th>Temperatur</th>
-                                            <th></th>
+                                            <th class="col-2">Dato</th>
+                                            <th class="col-2">Tidspunkt</th>
+                                            <th class="col-2">Lokale</th>
+                                            <th class="col-2">Luftkvalitet(CO2)</th>
+                                            <th class="col-2">Luftfughtighed</th>
+                                            <th class="col-1">Temperatur</th>
+                                            <th class="col-1"></th>
+                                            
                                         </tr>
                                     </thead>
                                     
@@ -111,7 +112,7 @@
                                         <td v-bind="testThing">{{measurement.cO2}}</td>
                                         <td>{{measurement.humidity}}</td>
                                         <td>{{measurement.temperature}}</td>
-                                        <td class="arrow">{{ getArrowDirection(index) }}</td>
+                                        <td style="background-color: white;" class="arrow">{{ getArrowDirection(index) }}</td>
                                         
                                     </tr>
                                 
