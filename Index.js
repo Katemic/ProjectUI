@@ -67,6 +67,9 @@ Vue.createApp({
             const end = start + this.itemsPerPage;
             return this.filteredMeasurements.slice(start, end);
         }
+
+        
+
     },
 
     //NYT
@@ -185,12 +188,22 @@ Vue.createApp({
         },
 
         getRowClass(value) {
-            if (value > 1000) {
+            if (value >= 1000) {
               return 'high-value';
-            } else if (value > 500) {
+            } else if (value > 800) {
               return 'medium-value';
             } else {
               return 'low-value';
+            }
+        },
+
+        getHeaderClass(value) {
+            if (value >= 1000) {
+                return 'high-value';
+            } else if (value > 500) {
+                return 'medium-value';
+            } else {
+                return 'low-value';
             }
         },
 
@@ -297,6 +310,8 @@ Vue.createApp({
                 window.co2ChartInstance.destroy();
             }
 
+            
+
             window.co2ChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -370,13 +385,16 @@ Vue.createApp({
 
             if (this.fromDate) {
                 params.push(`dateTimeLower=${(this.fromDate)}`);
+                console.log(this.fromDate)
             }
             if (this.toDate) {
                 params.push(`dateTimeUpper=${(this.toDate)}`);
+                console.log(this.toDate)
             }
 
             if (params.length > 0) {
                 url += '?' + params.join('&');
+                console.log(url)
             }
 
             await this.getMeasurements(url);
