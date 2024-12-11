@@ -281,7 +281,7 @@ Vue.createApp({
         // New method to update graph measurements
         updateGraphMeasurements() {
             console.log('Updating graph measurements...');
-            this.graphData = this.measurements.slice(0, this.selectedGraphSlice);
+            this.graphData = this.measurements.slice(0, this.selectedGraphSlice).reverse();
             this.renderChart(); // Re-render chart when slice changes
         },
 
