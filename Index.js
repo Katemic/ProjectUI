@@ -419,6 +419,10 @@ Vue.createApp({
             if (this.currentPage > 1) {
                 this.currentPage--;
             }
+        },
+
+        reloadPage() {
+            window.location.reload();
         }
 
 
