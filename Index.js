@@ -200,7 +200,7 @@ Vue.createApp({
         getHeaderClass(value) {
             if (value >= 1000) {
                 return 'high-value';
-            } else if (value > 500) {
+            } else if (value > 800) {
                 return 'medium-value';
             } else {
                 return 'low-value';
