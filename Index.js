@@ -17,13 +17,10 @@ Vue.createApp({
             testThing: null,
             advices: [
                 "Øg ventilationen ved at åbne vinduer.",
-                "Brug luftrensere med HEPA-filtre.",
                 "Tilføj indendørs planter for at forbedre luftkvaliteten.",
                 "Reducer brugen af stearinlys og røgelse.",
                 "Undgå at ryge indendørs.",
-                "Brug udsugningsventilatorer i køkkener og badeværelser.",
-                "Vedligehold regelmæssigt HVAC-systemer.",
-                "Begræns brugen af kemikaliebaserede rengøringsprodukter."
+                "Gå ud af rummet i et par minutter for at få frisk luft."
               ],
 
               emoji: null,
